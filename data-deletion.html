@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Deletion Policy | Prasthan - TA Management</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+      color: #1a1a2e;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #003087;
+      color: #FFD700;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #003087;
+    }
+
+    .header p {
+      font-size: 13px;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      margin-bottom: 14px;
+    }
+
+    .card h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #003087;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Two-column data type grid */
+    .data-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .data-item {
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    .data-item .label {
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .data-item p {
+      color: #555;
+      font-size: 12px;
+    }
+
+    .local {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+    }
+
+    .local .label {
+      color: #1D4ED8;
+    }
+
+    .firebase {
+      background: #FEF3C7;
+      border: 1px solid #FDE68A;
+    }
+
+    .firebase .label {
+      color: #B45309;
+    }
+
+    /* Flow diagram */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px dashed #E5E7EB;
+    }
+
+    .flow-step:last-child {
+      border-bottom: none;
+    }
+
+    .flow-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .flow-text .title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .flow-text .desc {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .tag-auto {
+      background: #DCFCE7;
+      color: #15803D;
+    }
+
+    .tag-manual {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+
+    .summary-box {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 10px;
+      padding: 14px;
+      max-width: 500px;
+      width: 100%;
+      margin-bottom: 14px;
+    }
+
+    .summary-box p {
+      font-size: 13px;
+      color: #166534;
+      line-height: 1.7;
+    }
+
+    .summary-box strong {
+      color: #14532D;
+    }
+
+    .notice {
+      background: #FFF8E1;
+      border-left: 3px solid #FFD700;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 12.5px;
+      color: #555;
+      line-height: 1.6;
+      max-width: 500px;
+      width: 100%;
+      margin-bottom: 14px;
+    }
+
+    .notice strong {
+      color: #333;
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 10px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+    }
+
+    .btn-wa {
+      background: #25D366;
+      color: #fff;
+    }
+
+    .btn-mail {
+      background: #003087;
+      color: #fff;
+    }
+
+    .btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    footer {
+      margin-top: 24px;
+      font-size: 11.5px;
+      color: #aaa;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="badge">Prasthan · TA Management</div>
+    <h1>Data Deletion Policy</h1>
+    <p>Travel Allowance App</p>
+  </div>
+
+  <!-- Data types -->
+  <div class="card">
+    <h2>📦 એપ કયા પ્રકારનો ડેટા સંગ્રહ કરે છે?</h2>
+    <div class="data-grid">
+      <div class="data-item local">
+        <div class="label">📱 Local Storage</div>
+        <p>TA entries, duty records, generated PDF history</p>
+      </div>
+      <div class="data-item firebase">
+        <div class="label">☁️ Firebase Auth</div>
+        <p>Registered mobile number, login session, registration form data</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- What happens when -->
+  <div class="card">
+    <h2>🔄 ડેટા ક્યારે ડીલીટ થાય?</h2>
+    <div class="flow">
+
+      <div class="flow-step">
+        <div class="flow-icon" style="background:#EFF6FF;">🗑️</div>
+        <div class="flow-text">
+          <div class="title">App Uninstall કરો
+            <span class="tag tag-auto">Automatic</span>
+          </div>
+          <div class="desc">
+            Local storage નો <strong>બધો TA data</strong> તરત જ delete થઈ જાય છે —
+            TA entries, Duty records, PDF history — કોઈ manual request જરૂરી નથી.
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-icon" style="background:#FEF3C7;">📲</div>
+        <div class="flow-text">
+          <div class="title">Firebase Account Data
+            <span class="tag tag-manual">Request જરૂરી</span>
+          </div>
+          <div class="desc">
+            Firebase Authentication માં store mobile number અને registration data
+            delete કરવા <strong>Help &amp; Support</strong> નો સંપર્ક કરવો પડે.
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-icon" style="background:#DCFCE7;">🔁</div>
+        <div class="flow-text">
+          <div class="title">ફરી Login કરો</div>
+          <div class="desc">
+            App reinstall કર્યા પછી same number થી login કરી શકો છો.
+            TA entries fresh start — નવેસરથી entry કરી શકો છો.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-box">
+    <p>
+      ✅ <strong>App uninstall = TA data automatic delete</strong> — કોઈ request વગર.<br>
+      ✅ <strong>Firebase account delete</strong> = Support contact કરો — 30 days માં remove.<br>
+      ✅ <strong>Re-registration</strong> = ગમે ત્યારે same number થી ફરી account બનાવી શકો.
+    </p>
+  </div>
+
+  <div class="notice">
+    <strong>📌 નોંધ:</strong> Prasthan app <strong>account delete કર્યા વિના</strong>
+    કારણ કે TA entries device ના local storage માં save છે — app delete = data delete.
+  </div>
+
+  <!-- Contact -->
+  <div class="contact-row">
+    <a class="btn btn-wa"
+      href="https://wa.me/919537548040?text=Prasthan%20App%20-%20Firebase%20Account%20Delete%20Request%0ARegistered%20Mobile%3A%20%0Aનામ%3A%20"
+      target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+      </svg>
+      WhatsApp
+    </a>
+    <a class="btn btn-mail"
+      href="mailto:prasthanapp@gmail.com?subject=Firebase%20Account%20Delete%20Request&body=Registered%20Mobile%3A%20%0AName%3A%20%0ARequest%3A%20Delete%20my%20Firebase%20account%20and%20data."
+      target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+      </svg>
+      Email
+    </a>
+  </div>
+
+  <footer>
+    &copy; 2026 Prasthan - TA Management &nbsp;|&nbsp; surat rural police
+  </footer>
+
+</body>
+
+</html>
